@@ -57,7 +57,7 @@ ip=$ip
 gateway=$gateway
 dns=$dns" > ~/.rise.config;
 
-echo "unclutter -idle 0" |  sudo tee /etc/X11/Xsession.d/99x11-common_start
+echo "unclutter -idle 0" |  sudo tee -a /etc/X11/Xsession.d/99x11-common_start
 
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
 
