@@ -65,6 +65,7 @@ echo "unclutter -idle 0" |  sudo tee -a /etc/X11/Xsession.d/99x11-common_start
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
 
 sudo raspi-config nonint do_wayland W1
+sudo raspi-config nonint do_blanking 1
 
 cd ~
 wget https://storage.googleapis.com/install-versions.risevision.com/installer-lnx-arm64.sh
