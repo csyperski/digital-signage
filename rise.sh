@@ -45,12 +45,12 @@ sudo apt update;
 sudo apt upgrade -y;
 sudo apt install -y unattended-upgrades unclutter;
 sudo apt autoremove -y
+sudo raspi-config nonint do_wayland W1
 
 echo "US/Central" > sudo tee /etc/timezone
 echo "$hostname" > sudo tee /etc/hostname
 
-echo "1 2 * * * root /sbin/reboot
-* * * * * export DISPLAY=:0;xset s noblank; xset s off; xset -dpms" | sudo tee -a /etc/cron.d/restart
+echo "1 2 * * * root /sbin/reboot" | sudo tee -a /etc/cron.d/restart
 
 
 echo -n  "hostname=$hostname
@@ -65,9 +65,6 @@ sudo raspi-config nonint do_blanking 1
 echo "done"
 
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
-
-sudo raspi-config nonint do_wayland W1
-sudo raspi-config nonint do_blanking 1
 
 cd ~
 wget https://storage.googleapis.com/install-versions.risevision.com/installer-lnx-arm64.sh
