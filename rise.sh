@@ -45,7 +45,6 @@ sudo apt update;
 sudo apt upgrade -y;
 sudo apt install -y unattended-upgrades unclutter;
 sudo apt autoremove -y
-sudo raspi-config nonint do_wayland W1
 
 echo "US/Central" > sudo tee /etc/timezone
 echo "$hostname" > sudo tee /etc/hostname
