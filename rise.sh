@@ -37,13 +37,12 @@ sudo nmcli c down 'Wired connection 1' && sudo nmcli c up 'Wired connection 1'
 
 
 echo "Giving some time for NTP to update..."
-sleep 30
+sleep 5
 echo "Proceeding."
 
-sleep 5
 sudo apt update; 
 sudo apt upgrade -y;
-sudo apt install -y unattended-upgrades unclutter;
+sudo apt install -y unattended-upgrades;
 sudo apt autoremove -y
 
 echo "US/Central" > sudo tee /etc/timezone
@@ -57,15 +56,28 @@ ip=$ip
 gateway=$gateway
 dns=$dns" > ~/.rise.config;
 
-echo "unclutter -idle 0" |  sudo tee -a /etc/X11/Xsession.d/99x11-common_start
-
 echo "Configuring power management..." 
 sudo raspi-config nonint do_blanking 1
 echo "done"
 
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
+sudo wget https://github.com/seffs/wayfire-plugins-extra-raspbian/releases/download/v0.7.5/wayfire-plugins-extra-raspbian-aarch64.tar.xz
+
+echo '[core]
+plugins = \
+        autostart \
+        hide-cursor
+
+[autostart]
+kiosk = ~/kiosk.sh' | sudo tee -a .config/wayfire.ini
+
+echo '#!/bin/bash
+/home/admin/rvplayer/scripts/start.sh' | tee ~/kiosk.sh
+
+chmod +x ~/kiosk.sh
 
 cd ~
 wget https://storage.googleapis.com/install-versions.risevision.com/installer-lnx-arm64.sh
 chmod +x installer-lnx-arm64.sh
 ./installer-lnx-arm64.sh --accept
+sudo tar xf wayfire-plugins-extra-raspbian-aarch64.tar.xz -C /
