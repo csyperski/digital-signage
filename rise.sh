@@ -62,6 +62,7 @@ echo "done"
 
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
 sudo wget https://github.com/seffs/wayfire-plugins-extra-raspbian/releases/download/v0.7.5/wayfire-plugins-extra-raspbian-aarch64.tar.xz
+sudo tar xf wayfire-plugins-extra-raspbian-aarch64.tar.xz -C /
 
 echo '[core]
 plugins = \
