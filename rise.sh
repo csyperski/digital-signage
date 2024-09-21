@@ -58,6 +58,7 @@ dns=$dns" > ~/.rise.config;
 
 echo "Configuring power management..." 
 sudo raspi-config nonint do_blanking 1
+sudo raspi-config nonint do_rpi_connect 1
 echo "done"
 
 sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/site/public/agoraimages/?item=18485
