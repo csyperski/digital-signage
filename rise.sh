@@ -65,7 +65,10 @@ sudo wget -O /usr/share/rpd-wallpaper/fisherman.jpg https://www.dupage88.net/sit
 sudo wget https://github.com/seffs/wayfire-plugins-extra-raspbian/releases/download/v0.7.5/wayfire-plugins-extra-raspbian-aarch64.tar.xz
 
 
-echo '[core]
+echo '[output:HDMI-A-1]
+mode = 1920x1080@6000
+
+[core]
 plugins = \
         autostart \
         hide-cursor
