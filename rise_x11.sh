@@ -22,6 +22,7 @@ else
 	if [ -f ~/aptupgrade.txt ]; then
 	echo "File exists."
 		sudo raspi-config nonint do_wayland W1
+  		sudo raspi-config nonint do_blanking 1
 		touch ~/running_x11.txt
 		sudo reboot
 	else
