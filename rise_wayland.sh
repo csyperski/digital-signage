@@ -1,5 +1,6 @@
 #!/bin/bash
-
+echo "Use rise_x11.sh"
+exit
 
 if [ -f ~/.rise.config ]; then
 	echo "This script has already been executed";
