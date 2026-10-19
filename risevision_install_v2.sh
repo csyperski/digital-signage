@@ -15,6 +15,7 @@ RV_DIR="$HOME/rvplayer"
 LOG="$HOME/risevision_install.log"
 STATE_FILE="$HOME/.config/risevision_install.state"
 AUTOSTART_FILE="$HOME/.config/autostart/risevision-install-resume.desktop"
+CURSOR_AUTOSTART="$HOME/.config/autostart/unclutter.desktop"
 SCRIPT_PATH="$(readlink -f "$0")"
 SUDO_KEEPALIVE_PID=""
 
@@ -194,6 +195,23 @@ step_fonts() {
     fi
 }
 
+# The Player runs under Xwayland, so unclutter hides the pointer over it
+# (after 1s idle) while leaving the Wayland desktop cursor alone
+step_cursor() {
+    apt_gauge "Installing unclutter (hides the mouse cursor)..." install unclutter-xfixes \
+        || die "Failed to install unclutter-xfixes."
+    mkdir -p "$(dirname "$CURSOR_AUTOSTART")"
+    cat >"$CURSOR_AUTOSTART" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Hide mouse cursor
+Exec=sh -c 'sleep 5; DISPLAY=:0 exec unclutter --timeout 1 --start-hidden --fork'
+Terminal=false
+EOF
+    log "Installed unclutter-xfixes and autostart entry $CURSOR_AUTOSTART"
+    NEED_REBOOT=1
+}
+
 step_download() {
     mkdir -p "$DL_DIR"
     local dest="$DL_DIR/$INSTALLER" url="$BASE_URL/$INSTALLER" total
@@ -248,6 +266,7 @@ do_install() {
         SETTINGS  "Keyboard US, no blanking, OSK off, WiFi US"  ON \
         AUTOLOGIN "Desktop auto-login as '$USER'"              ON \
         FONTS     "Pre-install Microsoft fonts (accept EULA)"  ON \
+        CURSOR    "Hide the mouse cursor over the Player"      ON \
         RISE      "Download & install Rise Vision Player"      ON \
         3>&1 1>&2 2>&3) || return
     [[ -z "$choices" ]] && { msg "Nothing selected."; return; }
@@ -304,6 +323,7 @@ run_steps() {
                        done_list+="  - Keyboard US, blanking off, on-screen keyboard off, Wi-Fi country US\n" ;;
             AUTOLOGIN) step_autologin; done_list+="  - Desktop auto-login enabled\n" ;;
             FONTS)     step_fonts;     done_list+="  - Microsoft fonts installed\n" ;;
+            CURSOR)    step_cursor;    done_list+="  - Mouse cursor hidden over the Player\n" ;;
             RISE)      step_download; step_install; done_list+="  - Rise Vision Player installed\n" ;;
         esac
     done
@@ -336,6 +356,7 @@ do_uninstall() {
     clear
     log "Running $script"
     "$script" 2>&1 | tee -a "$LOG"
+    rm -f "$CURSOR_AUTOSTART"
     msg "Rise Vision Player has been uninstalled."
 }
 
