@@ -84,9 +84,9 @@ preflight() {
         yesno "No desktop session detected.\n\nRise Vision does not support headless/SSH installs. The installer must be run from a Terminal on the Pi's desktop with a monitor attached.\n\nContinue anyway (not recommended)?" --defaultno || exit 1
     fi
 
-    if ! curl -sfI --max-time 10 "$BASE_URL/$INSTALLER" >/dev/null; then
-        die "Cannot reach the Rise Vision download server.\nCheck the network connection and try again."
-    fi
+    #if ! curl -sfI --max-time 10 "$BASE_URL/$INSTALLER" >/dev/null; then
+    #    die "Cannot reach the Rise Vision download server.\nCheck the network connection and try again."
+    #fi
 
     OS_NAME=$(. /etc/os-release && echo "$PRETTY_NAME")
     log "Preflight OK: model='$MODEL' os='$OS_NAME' arch=$ARCH_LABEL installer=$INSTALLER"
